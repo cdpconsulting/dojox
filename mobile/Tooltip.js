@@ -8,10 +8,12 @@ define([
 	"dojo/dom-geometry",
 	"dojo/dom-style",
 	"dijit/place",
-	"dijit/_WidgetBase"
-], function(array, registry, declare, lang, domClass, domConstruct, domGeometry, domStyle, place, WidgetBase){
+	"dijit/_WidgetBase",
+	"dojo/has",
+	"dojo/has!dojo-bidi?dojox/mobile/bidi/Tooltip"
+], function(array, registry, declare, lang, domClass, domConstruct, domGeometry, domStyle, place, WidgetBase, has, BidiTooltip){
 
-	return declare("dojox.mobile.Tooltip", WidgetBase, {
+	var Tooltip = declare(has("dojo-bidi") ? "dojox.mobile.NonBidiTooltip" : "dojox.mobile.Tooltip", WidgetBase, {
 		// summary:
 		//		A non-templated popup bubble widget
 
@@ -23,6 +25,7 @@ define([
 			this.anchor = domConstruct.create("div", {"class":"mblTooltipAnchor"}, this.domNode, "first");
 			this.arrow = domConstruct.create("div", {"class":"mblTooltipArrow"}, this.anchor);
 			this.innerArrow = domConstruct.create("div", {"class":"mblTooltipInnerArrow"}, this.anchor);
+			
 			if(!this.containerNode){
 				// set containerNode so that getChildren() works
 				this.containerNode = this.domNode;
@@ -105,4 +108,6 @@ define([
 			this.inherited(arguments);
 		}
 	});
+	
+	return has("dojo-bidi") ? declare("dojox.mobile.Tooltip", [Tooltip, BidiTooltip]) : Tooltip;		
 });
