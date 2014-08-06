@@ -355,6 +355,7 @@ define(["dojo/_base/lang",
 						}
 					}
 				});
+                /*originally this value was set to 33 but the menu used to freeze*/
 			}, 200);
 		});		   
 	};
